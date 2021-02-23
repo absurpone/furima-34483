@@ -1,15 +1,15 @@
 ## usersテーブル
 
-| Column           | Type       | Options                   |
-| ---------------- | ---------- | ------------------------- |
-| nickname         | string     | null: false, unique: true |
-| email            | string     | null: false, unique: true |
-| password         | string     | null: false               |
-| family_name      | string     | null: false               |
-| first_name       | string     | null: false               |
-| kana_family_name | string     | null: false               |
-| kana_first_name  | string     | null: false               |
-| birthday         | date       | null: false               |
+| Column             | Type       | Options                   |
+| ------------------ | ---------- | ------------------------- |
+| nickname           | string     | null: false               |
+| email              | string     | null: false, unique: true |
+| encrypted_password | string     | null: false               |
+| family_name        | string     | null: false               |
+| first_name         | string     | null: false               |
+| kana_family_name   | string     | null: false               |
+| kana_first_name    | string     | null: false               |
+| birthday           | date       | null: false               |
 
 
 ### Association
@@ -20,7 +20,7 @@
 
 | Column           | Type       | Options                        |
 | ---------------- | ---------- | ------------------------------ |
-| price            | int        | null: false                    |
+| price            | integer    | null: false                    |
 | title            | string     | null: false                    |
 | detail           | text       | null: false                    |
 | category_id      | integer    | null: false                    |
@@ -52,9 +52,9 @@
 | ------------- | ---------- | ------------------------------ |
 | zip_code      | string     | null: false                    |
 | prefecture_id | integer    | null: false                    |
-| city          | text       | null: false                    |
-| street        | text       | null: false                    |
-| building      | text       |                                |
+| city          | string     | null: false                    |
+| street        | string     | null: false                    |
+| building      | string     |                                |
 | telephone     | string     | null: false                    |
 | purchase      | references | null: false, foreign_key: true |
 
