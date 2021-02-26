@@ -9,13 +9,9 @@ class Item < ApplicationRecord
   belongs_to :user
   has_one_attached :image
 
-  validates :price, presence: true # 価格のバリデーション、半角数字で入力の設定
-  validates :title, presence: true
-  validates :detail, presence: true
-  validates :category_id, presence: true, numericality: { other_than: 1 }
-  validates :condition_id, presence: true, numericality: { other_than: 1 }
-  validates :pays_postage_id, presence: true, numericality: { other_than: 1 }
-  validates :prefecture_id, presence: true, numericality: { other_than: 1 }
-  validates :shipping_date_id, presence: true, numericality: { other_than: 1 }
-  validates :image, presence: true
+  validates :price, presence: true, :numericality => { :only_integer => true, :greater_than_or_equal_to => 300, :less_than_or_equal_to => 9999999 }
+
+  validates :image, :title, :detail, presence: true
+  validates :category_id, :condition_id, :pays_postage_id, :prefecture_id, :shipping_date_id, presence: true, numericality: { other_than: 1 }
+  
 end
