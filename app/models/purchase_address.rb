@@ -1,6 +1,6 @@
 class PurchaseAddress
   include ActiveModel::Model
-  attr_accessor :zip_code, :prefecture_id, :city, :street, :building, :telephone, :purchase_id, :item_id, :user_id
+  attr_accessor :zip_code, :prefecture_id, :city, :street, :building, :telephone, :purchase_id, :item_id, :user_id, :token
 
   with_options presence: true do
     validates :zip_code, format: { with: /\A[0-9]{3}-[0-9]{4}\z/ }
@@ -10,6 +10,7 @@ class PurchaseAddress
     validates :telephone, format: { with: /\A0[0-9]{1,10}\z/ }
     validates :user_id
     validates :item_id
+    validates :token
   end
 
   def save
