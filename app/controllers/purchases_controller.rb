@@ -1,13 +1,14 @@
 class PurchasesController < ApplicationController
   before_action :authenticate_user!, only: [:index, :create]
+  before_action :set_item, only: [:index, :create]
+  before_action :contributor_confirmation, only: [:index, :create]
   
   def index
-    @item = Item.find(params[:item_id])
     @purchase_address = PurchaseAddress.new
   end
 
   def create
-    @item = Item.find(params[:item_id])
+    
     @purchase_address = PurchaseAddress.new(purchase_params)
     if @purchase_address.valid?
       pay_item
@@ -32,4 +33,13 @@ class PurchasesController < ApplicationController
       currency: 'jpy'
     )
   end
+
+  def set_item
+    @item = Item.find(params[:item_id])
+  end  
+  
+  def contributor_confirmation
+    redirect_to root_path if current_user == @item.user
+  end
+  
 end
