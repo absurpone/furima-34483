@@ -8,7 +8,6 @@ class PurchaseAddress
     validates :city
     validates :street
     validates :telephone, format: { with: /\A0[0-9]{9,10}\z/ }
-    validates :purchase_id
     validates :user_id
     validates :item_id
   end
