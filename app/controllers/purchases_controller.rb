@@ -4,6 +4,9 @@ class PurchasesController < ApplicationController
   before_action :contributor_confirmation, only: [:index, :create]
   
   def index
+    if @item.purchase.present?
+      redirect_to root_path
+    end
     @purchase_address = PurchaseAddress.new
   end
 
