@@ -63,6 +63,12 @@ RSpec.describe PurchaseAddress, type: :model do
         expect(@purchase_address.errors.full_messages).to include("Telephone can't be blank")
       end
 
+      it 'telephoneは英数混合では登録できないこと' do
+        @purchase_address.telephone ='090abcdefgh'
+        @purchase_address.valid?
+        expect(@purchase_address.errors.full_messages).to include("Telephone is invalid")
+      end      
+
       it 'telephoneは11桁以内の半角数字でないと保存できないこと' do
         @purchase_address.telephone ='090123456789'
         @purchase_address.valid?
