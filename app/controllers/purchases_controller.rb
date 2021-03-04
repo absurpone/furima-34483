@@ -2,16 +2,13 @@ class PurchasesController < ApplicationController
   before_action :authenticate_user!, only: [:index, :create]
   before_action :set_item, only: [:index, :create]
   before_action :contributor_confirmation, only: [:index, :create]
+  before_action :check_item_sold, only: [:index, :create]
   
   def index
-    if @item.purchase.present?
-      redirect_to root_path
-    end
     @purchase_address = PurchaseAddress.new
   end
 
   def create
-    
     @purchase_address = PurchaseAddress.new(purchase_params)
     if @purchase_address.valid?
       pay_item
@@ -43,6 +40,12 @@ class PurchasesController < ApplicationController
   
   def contributor_confirmation
     redirect_to root_path if current_user == @item.user
+  end
+
+  def check_item_sold
+    if @item.purchase.present?
+      redirect_to root_path
+    end
   end
   
 end
