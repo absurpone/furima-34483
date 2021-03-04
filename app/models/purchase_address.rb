@@ -18,6 +18,7 @@ class PurchaseAddress
     purchase = Purchase.create(user_id: user_id, item_id: item_id)
 
     # 住所を保存する
-    Address.create(zip_code: zip_code, prefecture_id: prefecture_id, city: city, street: street, building: building, telephone: telephone, purchase_id: purchase.id)
+    Address.create(zip_code: zip_code, prefecture_id: prefecture_id, city: city, street: street, building: building,
+                   telephone: telephone, purchase_id: purchase.id)
   end
 end

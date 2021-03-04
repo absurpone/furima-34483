@@ -59,7 +59,5 @@ def contributor_confirmation
 end
 
 def check_item_sold
-  if @item.purchase.present?
-    redirect_to root_path
-  end
+  redirect_to root_path if @item.purchase.present?
 end
