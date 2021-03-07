@@ -1,7 +1,7 @@
 class ItemsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show, :search]
   before_action :set_item, except: [:index, :new, :create, :search]
-  before_action :contributor_confirmation, only: [:edit, :update, :destroy, :search]
+  before_action :contributor_confirmation, only: [:edit, :update, :destroy]
   before_action :check_item_sold, only: [:edit, :update]
 
   def index
@@ -40,7 +40,9 @@ class ItemsController < ApplicationController
     redirect_to root_path
   end
 
-  
+  def search
+    @items = Item.search(params[:keyword])
+  end
 
   private
 
