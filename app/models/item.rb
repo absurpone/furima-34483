@@ -18,7 +18,7 @@ class Item < ApplicationRecord
                                                                                               numericality: { other_than: 1 }
   def self.search(search)
     if search != ''
-      Item.where('title LIKE(?)', '%#{search}%')
+      Item.where('title LIKE(?)', "%#{ search }%")
     else
       Item.all
     end

@@ -41,31 +41,26 @@ class ItemsController < ApplicationController
   end
 
   def search
-    @items = Item.search(params[:keyword])
+    @items = Item.search(params[:keyword]).order('created_at DESC')
   end
+
 
   private
 
   def item_params
     params.require(:item).permit(:image, :price, :title, :detail, :category_id, :condition_id, :pays_postage_id, :prefecture_id,
-                                 :shipping_date_id).merge(user_id: current_user.id)
+                                :shipping_date_id).merge(user_id: current_user.id)
   end
 
-  def search
-    @items = Item.search(params[:keyword])
+  def set_item
+    @item = Item.find(params[:id])
   end
-end
 
-private
+  def contributor_confirmation
+    redirect_to root_path unless current_user == @item.user
+  end
 
-def set_item
-  @item = Item.find(params[:id])
-end
-
-def contributor_confirmation
-  redirect_to root_path unless current_user == @item.user
-end
-
-def check_item_sold
-  redirect_to root_path if @item.purchase.present?
+  def check_item_sold
+    redirect_to root_path if @item.purchase.present?
+  end
 end
