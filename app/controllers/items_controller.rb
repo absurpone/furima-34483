@@ -1,7 +1,7 @@
 class ItemsController < ApplicationController
-  before_action :authenticate_user!, except: [:index, :show]
-  before_action :set_item, except: [:index, :new, :create]
-  before_action :contributor_confirmation, only: [:edit, :update, :destroy]
+  before_action :authenticate_user!, except: [:index, :show, :search]
+  before_action :set_item, except: [:index, :new, :create, :search]
+  before_action :contributor_confirmation, only: [:edit, :update, :destroy, :search]
   before_action :check_item_sold, only: [:edit, :update]
 
   def index
@@ -45,6 +45,10 @@ class ItemsController < ApplicationController
   def item_params
     params.require(:item).permit(:image, :price, :title, :detail, :category_id, :condition_id, :pays_postage_id, :prefecture_id,
                                  :shipping_date_id).merge(user_id: current_user.id)
+  end
+
+  def search
+    @items = Item.search(params[:keyword])
   end
 end
 
