@@ -44,12 +44,11 @@ class ItemsController < ApplicationController
     @items = Item.search(params[:keyword]).order('created_at DESC')
   end
 
-
   private
 
   def item_params
     params.require(:item).permit(:image, :price, :title, :detail, :category_id, :condition_id, :pays_postage_id, :prefecture_id,
-                                :shipping_date_id).merge(user_id: current_user.id)
+                                 :shipping_date_id).merge(user_id: current_user.id)
   end
 
   def set_item
