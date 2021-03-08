@@ -16,4 +16,11 @@ class Item < ApplicationRecord
   validates :image, :title, :detail, presence: true
   validates :category_id, :condition_id, :pays_postage_id, :prefecture_id, :shipping_date_id, presence: true,
                                                                                               numericality: { other_than: 1 }
+  def self.search(search)
+    if search != ''
+      Item.where('title LIKE(?)', "%#{search}%")
+    else
+      Item.all
+    end
+  end
 end

@@ -1,6 +1,6 @@
 class ItemsController < ApplicationController
-  before_action :authenticate_user!, except: [:index, :show]
-  before_action :set_item, except: [:index, :new, :create]
+  before_action :authenticate_user!, except: [:index, :show, :search]
+  before_action :set_item, except: [:index, :new, :create, :search]
   before_action :contributor_confirmation, only: [:edit, :update, :destroy]
   before_action :check_item_sold, only: [:edit, :update]
 
@@ -40,24 +40,26 @@ class ItemsController < ApplicationController
     redirect_to root_path
   end
 
+  def search
+    @items = Item.search(params[:keyword]).order('created_at DESC')
+  end
+
   private
 
   def item_params
     params.require(:item).permit(:image, :price, :title, :detail, :category_id, :condition_id, :pays_postage_id, :prefecture_id,
                                  :shipping_date_id).merge(user_id: current_user.id)
   end
-end
 
-private
+  def set_item
+    @item = Item.find(params[:id])
+  end
 
-def set_item
-  @item = Item.find(params[:id])
-end
+  def contributor_confirmation
+    redirect_to root_path unless current_user == @item.user
+  end
 
-def contributor_confirmation
-  redirect_to root_path unless current_user == @item.user
-end
-
-def check_item_sold
-  redirect_to root_path if @item.purchase.present?
+  def check_item_sold
+    redirect_to root_path if @item.purchase.present?
+  end
 end
