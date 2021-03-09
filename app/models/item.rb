@@ -8,7 +8,7 @@ class Item < ApplicationRecord
 
   belongs_to :user
   has_one :purchase
-  has_many :comments
+  has_many :comments, dependent: :destroy
   has_one_attached :image
 
   validates :price, presence: true,
